@@ -8,44 +8,49 @@ public class Learning {
         String[] types = {"Kamaz", "Ural", "Crazy", "Bombardeer", "Wheelster", "Tricycle", "naked fat bald angry man on foot"};
         String[] colors = {"Dirt", "Beige", "Dust", "Filth", "Ice", "Flesh", "M-M-Metal"};
         int size = 8;
-        int finishDistance = 300;
+        int finishDistance = 600;
         int type;
         int color;
-        String message;
         CrashCar[] cars = new CrashCar[size];
-        CrashCar car;
+        
         for (int i = 0; i < cars.length; i++) {
             type = (int) (Math.random() * types.length);
             color = (int) (Math.random() * colors.length);
             cars[i] = new CrashCar(types[type], colors[color]);
         }
+        
         // run cycle
         int crashCount;
         int count = 0;
         CrashCar victor = null;
+        String message;
+        
         while (true) {
             count++;
             crashCount = 0;
-            for (CrashCar car1 : cars) {
-                car = car1;
+            for (CrashCar car : cars) {
                 if (Math.random() > 0.25) car.accelerate();
                 else car.decelerate();
-                car.move();
+                if (car.getDistance() >= finishDistance && (victor == null || car.getDistance() > victor.getDistance())) {
+                    // if one than more crossed - check
+                    victor = car;
+                    // optionally try to pick a winner in case of tie...
+                }
+            }
+            
+            sortCars(cars);
+            CrashCar car;
+            for (int i = 0; i < cars.length; i++) {
+                car = cars[i];
                 if (car.getHaveCrashed()) {
                     message = "<CRASHED> ";
                     crashCount++;
                 } else message = "";
-                message += car.getColor() + " " + car.getTitle() + " travelled: " + car.getDistance() + ", velocity: " + car.getVelocity();
+                
+                message += car.getColor() + " " + car.getTitle() + " travelled: " + car.getDistance() + ", max velocity: " + car.getVelocity() + " (" + car.getVelocityChange() + ")";
                 System.out.println(message);
-                if (car.getDistance() >= finishDistance) {
-                    // optionally can join two ifs
-                    if (victor == null || car.getDistance() > victor.getDistance()) {
-                        // if one than more crossed - check
-                        victor = car;
-                    }
-                    // optionally try to pick a winner in case of tie...
-                }
             }
+            
             System.out.println("=====================<< " + count + " >>===================");
             // if all crashed - end
             if (crashCount == size) {
@@ -55,12 +60,35 @@ public class Learning {
             // if at least one crossed - end
             if (victor != null) {
                 System.out.println("Finish!!!");
-                System.out.println("Loser who won is: " + victor.getColor() + " " + victor.getTitle() + " travelled: " + victor.getDistance());
+                System.out.println("Loser who won is: " + victor.getColor() + " " + victor.getTitle() + " traveled: " + victor.getDistance());
                 break;
             }
             // else - continue
         }      
         
+    }
+    
+    public static void sortCars(CrashCar[] cars) {
+        boolean run = true;
+        CrashCar current;
+        CrashCar next;
+        CrashCar temp;
+        int start = 0;
+        while (run) {
+            run = false;
+            for (int i = start; i < cars.length - 1; i++) {
+                current = cars[i];
+                next = cars[i + 1];
+                if (current.getDistance() < next.getDistance()) {
+                    temp = current;
+                    cars[i] = next;
+                    cars[i + 1] = temp;
+                    run = true;
+                }
+            }
+            start++;
+//            if (start > cars.length) break; - optional infinity breaker
+        }
     }
 
 }

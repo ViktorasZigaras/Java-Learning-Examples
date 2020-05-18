@@ -5,18 +5,19 @@ public class Learning {
     public static void main(String[] args) {
 
         // create all
-        String[] types = {"Kamaz", "Ural", "Crazy", "Bombardeer", "Wheelster", "Tricycle", "naked fat bald angry man on foot"};
-        String[] colors = {"Dirt", "Beige", "Dust", "Filth", "Ice", "Flesh", "M-M-Metal"};
         int size = 8;
         int finishDistance = 600;
-        int type;
-        int color;
+        int totalClasses = 3;
+        int carClassIndex;
         CrashCar[] cars = new CrashCar[size];
+        CrashCar newCar = null;
         
         for (int i = 0; i < cars.length; i++) {
-            type = (int) (Math.random() * types.length);
-            color = (int) (Math.random() * colors.length);
-            cars[i] = new CrashCar(types[type], colors[color]);
+            carClassIndex = (int) (Math.random() * totalClasses);
+            if (carClassIndex == 0) newCar = new Truck();
+            else if (carClassIndex == 1) newCar = new Speedster();
+            else if (carClassIndex == 2) newCar = new Mutant();
+            cars[i] = newCar;
         }
         
         // run cycle
@@ -47,7 +48,7 @@ public class Learning {
                     crashCount++;
                 } else message = "";
                 
-                message += car.getColor() + " " + car.getTitle() + " travelled: " + car.getDistance() + ", max velocity: " + car.getVelocity() + " (" + car.getVelocityChange() + ")";
+                message += car.getColor() + " " + car.getType() + " [travelled: " + car.getDistance() + ", max velocity: " + car.getVelocity() + " (" + car.getVelocityChange() + ")]";
                 System.out.println(message);
             }
             
@@ -60,7 +61,7 @@ public class Learning {
             // if at least one crossed - end
             if (victor != null) {
                 System.out.println("Finish!!!");
-                System.out.println("Loser who won is: " + victor.getColor() + " " + victor.getTitle() + " traveled: " + victor.getDistance());
+                System.out.println("Loser who won is: " + victor.getColor() + " " + victor.getType() + " traveled: " + victor.getDistance());
                 break;
             }
             // else - continue

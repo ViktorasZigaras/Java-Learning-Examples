@@ -1,47 +1,52 @@
 package learning;
 
+/*
+A generic polymorphic vechicle that has generic methods to perform movement
+*/
 public class CrashCar {
     
-    private final String title;
-    private final String color;
-    private int distance = 0;
-    private int velocity = 0;
-    private int velocityChange = 0;
-    private boolean isCrashed = false;
-    private final int maxVelocity = 200;
-    private final int minVelocity = 0;
-    private final int acceleration = 10;
-    private final int deceleration = 5;
-    private final double crashChance = 0.1;
+    protected String type;
+    protected String color;
+    protected int distance = 0;
+    protected int velocity = 0;
+    protected int velocityChange = 0;
+    protected boolean isCrashed = false;
+    protected int maxVelocity = 200;
+    protected int minVelocity = 0;
+    protected int acceleration = 10;
+    protected int deceleration = 5;
+    protected double crashChance = 0.1;
+    protected String[] types = {"'no type'"};
+    protected String[] colors = {"-no color-"};
     
-    CrashCar(String title, String color) {
-        this.title = title;
+    CrashCar() {
+        this("", "");
+    };
+    // unused for the time being
+    CrashCar(String type, String color) {
+        this.type = type;
         this.color = color;
     }
     
-    public String getTitle() {
-        return this.title;
-    }
+    public String getType() {return this.type;}
     
-    public String getColor() {
-        return this.color;
-    }
+    public void setType(String title) {this.type = title;}
     
-    public int getDistance() {
-        return this.distance;
-    }
+    public String getColor() {return this.color;}
     
-    public int getVelocity() {
-        return this.velocity;
-    }
+    public void setColor(String color) {this.color = color;}
     
-    public int getVelocityChange() {
-        return this.velocityChange;
-    }
+    public String[] getTypes() {return this.types;}
     
-    public boolean getHaveCrashed() {
-        return this.isCrashed;
-    }
+    public String[] getColors() {return this.colors;}
+    
+    public int getDistance() {return this.distance;}
+    
+    public int getVelocity() {return this.velocity;}
+    
+    public int getVelocityChange() {return this.velocityChange;}
+    
+    public boolean getHaveCrashed() {return this.isCrashed;}
     
     public void accelerate() {
         if (!this.isCrashed) {
@@ -65,6 +70,11 @@ public class CrashCar {
             if (Math.random() < crashChance) this.isCrashed = true;
             else this.distance += this.velocity;
         }
+    }
+    
+    protected void initCar() {
+        this.type = this.types[(int) (Math.random() * this.types.length)];
+        this.color = this.colors[(int) (Math.random() * this.colors.length)];
     }
     
 }

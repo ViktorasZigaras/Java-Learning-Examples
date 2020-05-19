@@ -1,9 +1,11 @@
-package learning;
+package learning.cars;
+
+import learning.helpers.Random;
 
 /*
-A generic polymorphic vechicle that has generic methods to perform movement
+A blueprint for all cars
 */
-public class CrashCar {
+abstract public class AbstractCar {
     
     protected String type;
     protected String color;
@@ -19,11 +21,11 @@ public class CrashCar {
     protected String[] types = {"'no type'"};
     protected String[] colors = {"-no color-"};
     
-    CrashCar() {
+    public AbstractCar() {
         this("", "");
     };
     // unused for the time being
-    CrashCar(String type, String color) {
+    public AbstractCar(String type, String color) {
         this.type = type;
         this.color = color;
     }
@@ -50,7 +52,7 @@ public class CrashCar {
     
     public void accelerate() {
         if (!this.isCrashed) {
-            this.velocityChange = (int) (Math.random() * acceleration);
+            this.velocityChange = Random.returnRandom(acceleration);
             changeVelocity();
             if (this.velocity > this.maxVelocity) this.velocity = maxVelocity;
         } else this.velocityChange = 0;
@@ -58,7 +60,7 @@ public class CrashCar {
     
     public void decelerate() {
         if (!this.isCrashed) {
-            this.velocityChange = (int) (-Math.random() * deceleration);
+            this.velocityChange = -Random.returnRandom(deceleration);
             changeVelocity();
             if (this.velocity < this.minVelocity) this.velocity = minVelocity;
         } else this.velocityChange = 0;
@@ -73,8 +75,8 @@ public class CrashCar {
     }
     
     protected void initCar() {
-        this.type = this.types[(int) (Math.random() * this.types.length)];
-        this.color = this.colors[(int) (Math.random() * this.colors.length)];
+        this.type = this.types[Random.returnRandom(this.types.length)];
+        this.color = this.colors[Random.returnRandom(this.colors.length)];
     }
     
 }

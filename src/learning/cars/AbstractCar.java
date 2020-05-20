@@ -1,11 +1,12 @@
 package learning.cars;
 
 import learning.helpers.Random;
+import learning.interfaces.IVechicle;
 
 /*
 A blueprint for all cars
 */
-abstract public class AbstractCar {
+abstract public class AbstractCar implements IVechicle {
     
     protected String type;
     protected String color;
@@ -30,26 +31,27 @@ abstract public class AbstractCar {
         this.color = color;
     }
     
+    @Override
     public String getType() {return this.type;}
-    
+    @Override
     public void setType(String title) {this.type = title;}
-    
+    @Override
     public String getColor() {return this.color;}
-    
+    @Override
     public void setColor(String color) {this.color = color;}
-    
+    @Override
     public String[] getTypes() {return this.types;}
-    
+    @Override
     public String[] getColors() {return this.colors;}
-    
+    @Override
     public int getDistance() {return this.distance;}
-    
+    @Override
     public int getVelocity() {return this.velocity;}
-    
+    @Override
     public int getVelocityChange() {return this.velocityChange;}
-    
+    @Override
     public boolean getHaveCrashed() {return this.isCrashed;}
-    
+    @Override
     public void accelerate() {
         if (!this.isCrashed) {
             this.velocityChange = Random.returnRandom(acceleration);
@@ -57,7 +59,7 @@ abstract public class AbstractCar {
             if (this.velocity > this.maxVelocity) this.velocity = maxVelocity;
         } else this.velocityChange = 0;
     }
-    
+    @Override
     public void decelerate() {
         if (!this.isCrashed) {
             this.velocityChange = -Random.returnRandom(deceleration);
@@ -65,7 +67,7 @@ abstract public class AbstractCar {
             if (this.velocity < this.minVelocity) this.velocity = minVelocity;
         } else this.velocityChange = 0;
     }
-    
+    @Override
     public void changeVelocity() {
         this.velocity += this.velocityChange;
         if (!this.isCrashed) {

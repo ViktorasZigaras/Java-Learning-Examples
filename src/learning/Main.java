@@ -3,21 +3,23 @@ package learning;
 import learning.cars.Truck;
 import learning.cars.Speedster;
 import learning.cars.Mutant;
-import learning.cars.CrashCar;
+import learning.cars.AbstractCar;
 import learning.helpers.CarSort;
 import learning.helpers.Random;
+import learning.interfaces.IMain;
+import learning.interfaces.ISpecificVechicle;
 
-public class Main {
+// needs some useful specific methods to implement
+public class Main implements IMain {
 
     public static void main(String[] args) {
 
         // create all
-        int size = 8;
         int finishDistance = 600;
         int totalClasses = 3;
         int carClassIndex;
-        CrashCar[] cars = new CrashCar[size];
-        CrashCar newCar = null;
+        AbstractCar[] cars = new AbstractCar[IMain.Count];
+        AbstractCar newCar = null;
         
         for (int i = 0; i < cars.length; i++) {
             carClassIndex = Random.returnRandom(totalClasses);
@@ -30,13 +32,13 @@ public class Main {
         // run cycle
         int crashCount;
         int count = 0;
-        CrashCar victor = null;
+        AbstractCar victor = null;
         String message;
         
         while (true) {
             count++;
             crashCount = 0;
-            for (CrashCar car : cars) {
+            for (AbstractCar car : cars) {
                 if (Math.random() > 0.25) car.accelerate();
                 else car.decelerate();
                 if (car.getDistance() >= finishDistance && (victor == null || car.getDistance() > victor.getDistance())) {
@@ -47,7 +49,7 @@ public class Main {
             }
             
             CarSort.sortCars(cars);
-            CrashCar car;
+            AbstractCar car;
             for (int i = 0; i < cars.length; i++) {
                 car = cars[i];
                 if (car.getHaveCrashed()) {
@@ -61,7 +63,7 @@ public class Main {
             
             System.out.println("=====================<< " + count + " >>===================");
             // if all crashed - end
-            if (crashCount == size) {
+            if (crashCount == IMain.Count) {
                 System.out.println("All have crashed - GLORY!!!");
                 break;
             }
@@ -69,6 +71,8 @@ public class Main {
             if (victor != null) {
                 System.out.println("Finish!!!");
                 System.out.println("Loser who won is: " + victor.getColor() + " " + victor.getType() + " traveled: " + victor.getDistance());
+                ISpecificVechicle iSV = (ISpecificVechicle) victor;
+                iSV.cheer();
                 break;
             }
             // else - continue

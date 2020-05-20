@@ -1,14 +1,14 @@
 package learning.helpers;
 
-import learning.cars.CrashCar;
+import learning.cars.AbstractCar;
 
 public final class CarSort {
     
-    public static void sortCars(CrashCar[] cars) {
+    public static void sortCars(AbstractCar[] cars) {
         boolean run = true;
-        CrashCar current;
-        CrashCar next;
-        CrashCar temp;
+        AbstractCar current;
+        AbstractCar next;
+        AbstractCar temp;
         int start = 0;
         while (run) {
             run = false;

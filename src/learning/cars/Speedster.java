@@ -1,9 +1,11 @@
 package learning.cars;
 
+import learning.interfaces.ISpecificVechicle;
+
 /*
 A totally unsafe death trap of a vechicle "driven" by psychotic wackjobs on drugs, no safeties are obviously provided (useless melee weapons and sharp spiky shoulder guards are a must!)
 */
-public class Speedster extends CrashCar {
+public class Speedster extends AbstractCar implements ISpecificVechicle {
     
     private final String[] newTypes = {"'Crazy'", "'Wheelster'", "'Tricycle'"};
     private final String[] newColors = {"-Ice-", "-M-M-Metal-", "-Dark Heavy Metal-"};
@@ -16,6 +18,11 @@ public class Speedster extends CrashCar {
         this.types = this.newTypes;
         this.colors = this.newColors;
         super.initCar();
+    }
+    
+    @Override
+    public void cheer() {
+        System.out.println("Dies from overdose and is replaced by another fucking desert chem junkie!");
     }
     
 }
